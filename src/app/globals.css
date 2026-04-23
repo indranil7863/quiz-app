@@ -1,6 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary-background: #0f172a;
+  --primary-foreground: #e0e7ff;
+
+  --secondary-background: #1e1b4b;
+  --secondary-foreground: #e0e7ff;
+  --card-background: #1e1b4b;
+  --card-foreground: #e0e7ff;
+
+  --button-background: #8b5cf6;
+  --button-foreground: #ffffff;
+}
+
+/* center a div */
+.center-div{
+   @apply flex justify-center items-center
+}
+
+@theme{
+  --color-primary-background: var(--primary-background);
+  --color-primary-foreground: var(--primary-foreground);
 }
