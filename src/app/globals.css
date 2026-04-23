@@ -21,4 +21,10 @@
 @theme{
   --color-primary-background: var(--primary-background);
   --color-primary-foreground: var(--primary-foreground);
+  --color-secondary-background: var(--secondary-background);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-card-background: var(--card-background);
+  --color-card-foreground: var(--card-foreground);
+  --color-button-background: var(--button-background);
+  --color-button-foreground: var(--button-foreground);
 }
