@@ -48,14 +48,14 @@ const page = () => {
           <div className="flex justify-between items-center pt-4 gap-2">
             <Link
               className="border center-div gap-4 px-4 text-sm font-bold py-2 rounded-lg hover:text-gray-500"
-              href={"/edit"}
+              href={"/create-quiz"}
             >
               <SquarePen size={18} />
               <span>Edit</span>
             </Link>
             <Link
               className="border center-div gap-4 px-4 text-sm font-bold py-2 rounded-lg text-sky-400 hover:text-gray-500"
-              href={"/play"}
+              href={"/dashboard/quiz"}
             >
               <PlayIcon size={18} />
               <span>Play</span>

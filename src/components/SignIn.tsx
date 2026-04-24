@@ -34,10 +34,13 @@ export const SignIn = () => {
             placeholder="Enter your password"
           />
         </div>
-        <button className="flex flex-row justify-center gap-2 w-[90%] mx-auto py-1  rounded-xl text-white bg-green-600 transition duration-300 hover:scale-105 hover:bg-green-500">
+        <Link
+          href={"/landingpage"}
+          className="flex flex-row justify-center gap-2 w-[90%] mx-auto py-1  rounded-xl text-white bg-green-600 transition duration-300 hover:scale-105 hover:bg-green-500"
+        >
           <User size={20} className="pt-1" />
           <span>Sign In</span>
-        </button>
+        </Link>
         <div className=" text-center">
           <Link
             href={"/"}
