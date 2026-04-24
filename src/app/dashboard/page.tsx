@@ -10,44 +10,63 @@ import { Play } from "next/font/google";
 import Link from "next/link";
 import React from "react";
 
-export const page = () => {
+const page = () => {
   return (
-    <div>
-      <section>
-        <div>
-          <button>
-            <ArrowLeft />
-            <span>Back</span>
-          </button>
-          <div>
-            <BookOpen />
-            <span>My Quizzes</span>
+    <div className=" flex flex-col gap-4">
+      <div className="bg-secondary-background">
+        <section className="sticky top-0 z-4 shadow-2xl flex w-[90%] mx-auto  justify-between items-center px-4 py-2 bg-secondary-background text-secondary-foreground">
+          <div className="center-div gap-4 py-2">
+            <button className="center-div gap-4 px-4 py-1 rounded-lg bg-button-background text-button-foreground hover:bg-button-background/50">
+              <ArrowLeft size={18} />
+              <span>Back</span>
+            </button>
+            <div className=" text-2xl px-2 py-2 font-medium">
+              <span>My Quizzes</span>
+            </div>
           </div>
-        </div>
-        <div>
-          <CirclePlus />
-          <span>New Quiz</span>
-        </div>
-      </section>
-      <section>
-        <div>
-          <h2>Javascript Basics</h2>
-          <p>Test your knowledge of JavaScript fundamentals</p>
-          <div>
-            <span>2 questions</span>
+          <Link
+            href={"/create-quiz"}
+            className="center-div gap-2 px-4 py-2 rounded-lg  bg-button-background text-button-foreground  hover:bg-button-background/50"
+          >
+            <CirclePlus size={18} />
+            <span>New Quiz</span>
+          </Link>
+        </section>
+      </div>
+      <section className="w-[90%] mx-auto py-4 px-2 flex gap-4 items-center justify-center flex-wrap">
+        <div className=" bg-card-background text-card-foreground max-w-[350px] flex flex-col gap-2 px-4 py-4 rounded-lg hover:scale-102 transition duration-150">
+          <h2 className="text-xl font-serif tracking-wide font-medium">
+            Javascript Basics
+          </h2>
+          <p className="text-sm">
+            Test your knowledge of JavaScript fundamentals
+          </p>
+          <div className="flex justify-between py-2">
+            <span className="bg-gray-500 px-2 py-1 rounded-lg">
+              2 questions
+            </span>
             <span>code: 234</span>
           </div>
-          <div>
-            <Link href={"/edit"}>
-              <SquarePen />
+          <div className="flex justify-between items-center pt-4 gap-2">
+            <Link
+              className="border center-div gap-4 px-4 text-sm font-bold py-2 rounded-lg hover:text-gray-500"
+              href={"/edit"}
+            >
+              <SquarePen size={18} />
               <span>Edit</span>
             </Link>
-            <Link href={"/play"}>
-              <PlayIcon />
+            <Link
+              className="border center-div gap-4 px-4 text-sm font-bold py-2 rounded-lg text-sky-400 hover:text-gray-500"
+              href={"/play"}
+            >
+              <PlayIcon size={18} />
               <span>Play</span>
             </Link>
-            <Link href={"/share"}>
-              <Share2 />
+            <Link
+              className="border center-div gap-4 px-4 text-sm font-bold py-2 rounded-lg text-green-400 hover:text-gray-600"
+              href={"/share"}
+            >
+              <Share2 size={18} />
               <span>Share</span>
             </Link>
           </div>
@@ -56,3 +75,5 @@ export const page = () => {
     </div>
   );
 };
+
+export default page;
