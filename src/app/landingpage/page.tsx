@@ -29,7 +29,7 @@ const page = () => {
           </Link>
           <Link
             className="center-div gap-4 hover:bg-gray-400 transition duration-150 text-white px-4 py-1 rounded-lg"
-            href={"/logout"}
+            href={"/"}
           >
             <LogOut />
             <span>Logout</span>

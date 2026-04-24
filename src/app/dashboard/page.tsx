@@ -1,3 +1,4 @@
+import Backbtn from "@/components/Backbtn";
 import {
   ArrowLeft,
   BookOpen,
@@ -16,10 +17,7 @@ const page = () => {
       <div className="bg-secondary-background">
         <section className="sticky top-0 z-4 shadow-2xl flex w-[90%] mx-auto  justify-between items-center px-4 py-2 bg-secondary-background text-secondary-foreground">
           <div className="center-div gap-4 py-2">
-            <button className="center-div gap-4 px-4 py-1 rounded-lg bg-button-background text-button-foreground hover:bg-button-background/50">
-              <ArrowLeft size={18} />
-              <span>Back</span>
-            </button>
+            <Backbtn />
             <div className=" text-2xl px-2 py-2 font-medium">
               <span>My Quizzes</span>
             </div>
