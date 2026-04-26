@@ -1,4 +1,5 @@
 "use client";
+import Backbtn from "@/components/Backbtn";
 import {
   ArrowLeft,
   CirclePlus,
@@ -73,7 +74,7 @@ const page = () => {
       <section className=" w-full sticky top-0  py-2 bg-secondary-background text-secondary-foreground z-4">
         <div className="w-[90%] mx-auto flex justify-between items-center px-2 py-2">
           <div className="center-div gap-4">
-            <ArrowLeft />
+            <Backbtn />
             <p className="text-2xl">Create New Quiz</p>
           </div>
           <div>
