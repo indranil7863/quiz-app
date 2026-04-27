@@ -1,3 +1,4 @@
+"use client";
 import {
   BadgePlus,
   BookOpen,
@@ -8,9 +9,40 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { use, useState } from "react";
 
 const page = () => {
+  const [code, setCode] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const router = useRouter();
+
+  async function HandleJoinQuiz() {
+    // first verify the code
+    try {
+      // const res = await fetch(`http://localhost:3000/${code}`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-type": "application/json",
+      //   },
+      // });
+
+      // if (!res.ok) {
+      //   throw new Error("Invalid code!");
+      // }
+
+      // if code verification successful then redirect to /dashboard/quiz/id
+      router.push(`/dashboard/quiz?code=${code}`);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Unknown error");
+      }
+      setCode("");
+    }
+  }
+
   return (
     <div className=" min-h-screen w-full flex flex-col gap-4 ">
       <div className="flex justify-between items-center py-2 px-4 shadow-2xl sticky top-0 z-10 bg-secondary-background">
@@ -74,13 +106,16 @@ const page = () => {
               className="w-full  outline-none bg-gray-600/20 px-2 py-1 rounded-lg text-center"
               type="text"
               placeholder="Enter quiz code"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
             />
-            <Link
+            {error && <span>{error}</span>}
+            <button
               className="w-full text-center py-1 bg-button-background text-button-foreground rounded-lg hover:scale-105 transition duration-150"
-              href={"/create-quiz"}
+              onClick={HandleJoinQuiz}
             >
               Join Quiz
-            </Link>
+            </button>
           </div>
         </div>
         <div className="flex lg:flex-row lg:items-center flex-col gap-2 justify-around w-[50%] mx-auto px-1 py-4">

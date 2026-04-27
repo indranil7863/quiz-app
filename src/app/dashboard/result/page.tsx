@@ -2,8 +2,9 @@
 import { Clock, House, RotateCcw, Trophy } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-function page() {
+function ResultContent() {
   const params = useSearchParams();
   let score = params.get("score") ? parseInt(params.get("score")!) : 0;
   const totalQuestions = params.get("total")
@@ -75,4 +76,10 @@ function page() {
   );
 }
 
-export default page;
+export default function page() {
+  return (
+    <Suspense fallback={<p>loading....</p>}>
+      <ResultContent />
+    </Suspense>
+  );
+}
