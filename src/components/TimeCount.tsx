@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-function TimeCount({ duration }: { duration: number }) {
+function TimeCount({
+  duration,
+  isRunning,
+}: {
+  duration: number;
+  isRunning: boolean;
+}) {
   const [time, setTime] = useState<number>(duration);
   console.log(time);
   useEffect(() => {
+    if (!isRunning) return;
     if (!duration) return;
     setTime(duration);
     const interval = setInterval(() => {
@@ -16,7 +23,7 @@ function TimeCount({ duration }: { duration: number }) {
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [duration]);
+  }, [duration, isRunning]);
   return (
     <div>
       <span>{time}</span>

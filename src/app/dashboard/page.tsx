@@ -1,17 +1,16 @@
 import Backbtn from "@/components/Backbtn";
 import {
-  ArrowLeft,
-  BookOpen,
   CirclePlus,
   PlayIcon,
   Share2,
   SquarePen,
 } from "lucide-react";
-import { Play } from "next/font/google";
+
 import Link from "next/link";
-import React from "react";
+
 
 const page = () => {
+
   return (
     <div className=" flex flex-col gap-4">
       <div className="bg-secondary-background">
