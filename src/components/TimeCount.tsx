@@ -26,7 +26,12 @@ function TimeCount({
   }, [duration, isRunning]);
   return (
     <div>
-      <span>{time}</span>
+      <span
+        style={{ color: time < 6 ? "red" : "white" }}
+        className="font-medium text-2xl "
+      >
+        {time}s
+      </span>
     </div>
   );
 }

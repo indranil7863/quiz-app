@@ -1,8 +1,21 @@
+"use client";
 import { Clock, House, RotateCcw, Trophy } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import { useSearchParams } from "next/navigation";
 
 function page() {
+  const params = useSearchParams();
+  let score = params.get("score") ? parseInt(params.get("score")!) : 0;
+  const totalQuestions = params.get("total")
+    ? parseInt(params.get("total")!)
+    : 0;
+  let percentage = 0;
+  if (score && totalQuestions) {
+    percentage = Math.floor((score / totalQuestions) * 100);
+  }
+
+  // const title = params.get("title");
+  // console.log({ score, totalQuestions });
   return (
     <div className=" w-full min-h-screen py-6 ">
       <div className="max-w-150 mx-auto flex flex-col rounded-lg gap-8 px-4 py-4 bg-card-background text-card-foreground">
@@ -20,19 +33,23 @@ function page() {
           </div>
           <div className="center-div flex-col gap-4 py-3">
             <span className="text-5xl">🎯</span>
-            <p className="text-2xl">1/2</p>
-            <p className="text-2xl">50%</p>
+            <p className="text-2xl">
+              {score}/{totalQuestions}
+            </p>
+            <p className="text-2xl">{percentage}%</p>
             <p className="text-xl">Keep practicing! 📚</p>
           </div>
           <div className="flex justify-around gap-2 items-center  py-2 px-1">
             <div className="bg-gray-600/20 center-div flex-col flex-1 rounded-lg">
               <span className="text-5xl text-green-600">𖣠</span>
-              <span className="text-2xl text-green-500">1</span>
+              <span className="text-2xl text-green-500">{score}</span>
               <span className=" text-green-500">Correct</span>
             </div>
             <div className=" bg-gray-600/20 center-div py-2 flex-col flex-1 rounded-lg">
               <Clock size={25} color="red" />
-              <span className="text-2xl text-red-600 py-1">1</span>
+              <span className="text-2xl text-red-600 py-1">
+                {totalQuestions - score}
+              </span>
               <span className="text-red-500">Incorrect</span>
             </div>
           </div>

@@ -64,7 +64,7 @@ function page() {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   function run() {
     if (countRef.current >= quizData.current.length) {
-      router.replace("/dashboard/result");
+      router.replace(`/dashboard/result?score=${correctRef.current}&total=${quizData.current.length}`);
       return;
     }
 
@@ -122,7 +122,7 @@ function page() {
     const isCorrect = index === item?.correctIndex;
     setIsCorrect(+isCorrect);
 
-    if(isCorrect){
+    if (isCorrect) {
       correctRef.current++;
     }
 
@@ -142,7 +142,7 @@ function page() {
   return (
     <div className=" w-full min-h-screen flex flex-col gap-4">
       <div className=" w-full bg-secondary-background text-secondary-foreground">
-        <section className="lg:w-[80%] w-[90%] mx-auto">
+        <section className="lg:w-[80%] w-[90%] mx-auto flex flex-col gap-2 py-2 ">
           <div className=" flex sm:justify-between justify-center  gap-4 items-center flex-wrap px-4 py-2">
             <div>
               <p className=" px-2 py-1 rounded-lg bg-gray-600/20">
@@ -160,10 +160,10 @@ function page() {
                   />
                 )}
               </div>
-              <div className="center-div flex-col gap-1">
+              {/* <div className="center-div flex-col gap-1">
                 <span>Score</span>
                 <span>0/0</span>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className={`w-full bg-gray-300 rounded overflow-hidden`}>
@@ -210,7 +210,7 @@ function page() {
           ) : (
             <p className="center-div gap-6 hidden border-red-500 text-red-400">
               <span>X Incorrect! correct answer: </span>
-              <span>{item && item?.correctIndex+1}</span>
+              <span>{item && item?.correctIndex + 1}</span>
             </p>
           )}
         </div>
