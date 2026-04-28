@@ -8,7 +8,7 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-import { Play } from "next/font/google";
+
 import { SignIn } from "@/components/SignIn";
 
 export default function Home() {

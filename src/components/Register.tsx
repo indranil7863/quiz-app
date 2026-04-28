@@ -1,3 +1,4 @@
+"use client";
 import {
   ArrowLeft,
   BookOpen,
@@ -10,9 +11,83 @@ import {
   UserPlus,
 } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import { useEffect } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+
+type Inputs = {
+  name: string;
+  email: string;
+  password: string;
+  confirm: string;
+};
+
+const schema = z
+  .object({
+    name: z.string().min(1, { message: "please type your name" }),
+    email: z
+      .string()
+      .min(1, { message: "Invalid email format" })
+      .toLowerCase()
+      .trim(),
+    password: z
+      .string()
+      .min(6, { message: "password must have atleast 6 characters" })
+      .max(8, { message: "password must not exceed 8 characters" }),
+    confirm: z.string().min(1, { message: "please confirm your password" }),
+  })
+  .refine((data) => data.password === data.confirm, {
+    message: "password don't match",
+    path: ["confirm"],
+  });
 
 export const Register = () => {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    formState: { isSubmitSuccessful },
+    formState: { errors },
+  } = useForm<Inputs>({ resolver: zodResolver(schema) });
+  const submitData: SubmitHandler<Inputs> = async(data) => {
+        try {
+      const res = await fetch("http://localhost:5000/user/register", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          username: data.name,
+          email: data.email,
+          password: data.password
+
+        }),
+      });
+      const result = await res.json();
+      console.log(result);
+      if (!res.ok) {
+        setError("root", {
+          type: "server",
+          message: result.message || "Something went wrong",
+        });
+        return;
+      }
+      router.replace("/landingpage");
+    } catch (error) {
+      setError("root", { message: "Network connection failed" });
+    }
+  };
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [reset, isSubmitSuccessful]);
+
   return (
     <div className="flex flex-col just-center gap-8 max-w-[90%] mx-auto py-4 px-2">
       <section className="flex flex-col justify-center gap-2 items-center">
@@ -26,7 +101,10 @@ export const Register = () => {
           Create your account to get started
         </p>
       </section>
-      <section className=" max-w-[400px] mx-auto flex flex-col justify-center bg-gray-500/20 gap-4 px-4 py-4 rounded-xl">
+      <form
+        onSubmit={handleSubmit(submitData)}
+        className=" max-w-[400px] mx-auto flex flex-col justify-center bg-gray-500/20 gap-4 px-4 py-4 rounded-xl"
+      >
         <div className="flex just-center items-center">
           <ArrowLeft size={18} />
           <p className="flex-1 text-center text-2xl">Create Account</p>
@@ -47,7 +125,11 @@ export const Register = () => {
             type="text"
             id="name"
             placeholder="Enter your full name"
+            {...register("name")}
           />
+          {errors.name?.message && (
+            <span className="text-red-500">{errors.name?.message}</span>
+          )}
         </div>
         <div>
           <label
@@ -59,10 +141,14 @@ export const Register = () => {
           </label>
           <input
             className="w-full py-1 rounded-2xl px-4 outline-gray-500"
-            type="text"
+            type="email"
             id="email"
             placeholder="Enter your Email"
+            {...register("email")}
           />
+          {errors.email?.message && (
+            <span className="text-red-500">{errors.email?.message}</span>
+          )}
         </div>
         <div>
           <label
@@ -77,7 +163,11 @@ export const Register = () => {
             type="password"
             id="password"
             placeholder="Create a password"
+            {...register("password")}
           />
+          {errors.password?.message && (
+            <span className="text-red-500">{errors.password?.message}</span>
+          )}
         </div>
         <div>
           <label
@@ -92,7 +182,11 @@ export const Register = () => {
             type="password"
             id="password"
             placeholder="Confirm your password"
+            {...register("confirm")}
           />
+          {errors.confirm?.message && (
+            <span className="text-red-500">{errors.confirm?.message}</span>
+          )}
         </div>
         <button className="flex flex-row justify-center gap-2 w-full mx-auto py-1  rounded-xl text-white bg-green-600 transition duration-300 hover:scale-105 hover:bg-green-500">
           <UserPlus size={18} />
@@ -122,7 +216,7 @@ export const Register = () => {
         >
           Sign In Instead
         </Link>
-      </section>
+      </form>
       <section className="flex flex-row justify-evenly gap-2 flex-wrap ">
         <div className=" flex flex-col items-center py-4  gap-2 shadow-2xl bg-gray-500/20 px-4 rounded-xl">
           <span className="w-10 h-10 center-div bg-gray-400 text-white rounded-full">
