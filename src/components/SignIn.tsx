@@ -36,7 +36,7 @@ export const SignIn = () => {
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
   const submitData: SubmitHandler<Inputs> = async (data) => {
     try {
-      const res = await fetch("http://localhost:5000/user/signin", {
+      const res = await fetch("http://localhost:4000/auth/signin", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

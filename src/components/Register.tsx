@@ -55,16 +55,15 @@ export const Register = () => {
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
   const submitData: SubmitHandler<Inputs> = async(data) => {
         try {
-      const res = await fetch("http://localhost:5000/user/register", {
+      const res = await fetch("http://localhost:4000/auth/register", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
         },
         body: JSON.stringify({
-          username: data.name,
+          name: data.name,
           email: data.email,
           password: data.password
-
         }),
       });
       const result = await res.json();
