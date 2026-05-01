@@ -3,8 +3,9 @@ import Backbtn from "@/components/Backbtn";
 import Edit from "@/components/Edit";
 import SideBar from "@/components/SideBar";
 import { Save } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+
 
 type Question = {
   id: string;
@@ -15,13 +16,76 @@ type Question = {
 };
 
 const page = () => {
+  const router = useRouter();
   const [quiz, setQuiz] = useState<Question[]>([]);
   const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [err, setErr] = useState<string>("");
 
   // here our data is ready for new quiz we have to spread in one place then send to backend
   // if it is an existing quiz , then fetched data is allocated to states .
+
+  async function saveQuizHandler() {
+    // validation
+    if (title.trim().length < 1) {
+      setErr("write a valid title!");
+      return;
+    } else if (description.trim().length < 1) {
+      setErr("write a valid description");
+      return;
+    } else {
+      if (quiz.length < 1) {
+        setErr("quiz must have atleast one question");
+        return;
+      }
+      quiz.forEach((q, i) => {
+        if (q.question.trim().length < 1) {
+          setErr(`write question no: ${i + 1}`);
+          return;
+        } else {
+          q.options.forEach((op, j) => {
+            if (op.trim().length < 1) {
+              setErr(`write the option ${j + 1} in question no: ${i + 1}`);
+              return;
+            }
+          });
+        }
+      });
+    }
+
+    const quizCode = crypto.randomUUID();
+    const quizData = {
+      title: title,
+      description,
+      quizCode,
+      questions: quiz,
+    };
+    console.log(quizData);
+    try {
+      const res = await fetch("http://localhost:4000/quiz", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-type": "application/json",
+          
+        },
+        body: JSON.stringify(quizData),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to create the quiz!");
+      }
+      router.replace("/dashboard");
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
+
+  if (err.length > 1) {
+    alert(err);
+    setErr("");
+  }
 
   return (
     <div>
@@ -32,13 +96,13 @@ const page = () => {
             <p className="text-xl sm:text-2xl">Create New Quiz</p>
           </div>
           <div>
-            <Link
+            <button
+              onClick={saveQuizHandler}
               className="center-div gap-4 px-4 py-1 rounded-lg bg-gray-500/30 hover:bg-gray-700/30"
-              href={"/dashboard"}
             >
               <Save size={18} />
               <span>Save Quiz</span>
-            </Link>
+            </button>
           </div>
         </div>
       </section>

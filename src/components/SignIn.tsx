@@ -38,6 +38,7 @@ export const SignIn = () => {
     try {
       const res = await fetch("http://localhost:4000/auth/signin", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-type": "application/json",
         },
