@@ -6,7 +6,6 @@ import { Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-
 type Question = {
   id: string;
   question: string;
@@ -61,18 +60,16 @@ const page = () => {
       quizCode,
       questions: quiz,
     };
-    console.log(quizData);
+    console.log("quiz:", quizData);
     try {
       const res = await fetch("http://localhost:4000/quiz", {
         method: "POST",
         credentials: "include",
         headers: {
           "Content-type": "application/json",
-          
         },
         body: JSON.stringify(quizData),
       });
-
       if (!res.ok) {
         throw new Error("Failed to create the quiz!");
       }

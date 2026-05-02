@@ -2,14 +2,8 @@
 import TimeCount from "@/components/TimeCount";
 import { Clock, PartyPopper, QuoteIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { use, useEffect, useRef, useState } from "react";
-
-// type Options= {
-//   option1: string;
-//   option2: string;
-//   option3: string;
-//   options4: string;
-// }
+import React, { Suspense, use, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 type Question = {
   id: number;
@@ -19,7 +13,10 @@ type Question = {
   duration: number;
 };
 
-function page() {
+function Page() {
+  const searchParams = useSearchParams();
+  const quizId = searchParams.get("id") as string;
+  console.log("quizId: ", quizId);
   const quizData = useRef([
     {
       id: 1,
@@ -50,7 +47,10 @@ function page() {
 
   async function fetchData() {
     try {
-      const res = await fetch("http://localhost:3002/questions");
+      const res = await fetch(`http://localhost:4000/quiz/${quizId}`, {
+        credentials: "include",
+      });
+
       if (!res.ok) {
         throw new Error("Failed to fetch!");
       }
@@ -64,7 +64,9 @@ function page() {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   function run() {
     if (countRef.current >= quizData.current.length) {
-      router.replace(`/dashboard/result?score=${correctRef.current}&total=${quizData.current.length}`);
+      router.replace(
+        `/dashboard/result?score=${correctRef.current}&total=${quizData.current.length}&id=${quizId}`,
+      );
       return;
     }
 
@@ -90,7 +92,8 @@ function page() {
   useEffect(() => {
     async function init() {
       const data = await fetchData();
-      quizData.current = data;
+      console.log(data.message.questions);
+      quizData.current = data.message.questions;
       const q = run();
       if (q) startTimer(q);
     }
@@ -217,6 +220,14 @@ function page() {
       </section>
       <section></section>
     </div>
+  );
+}
+
+function page() {
+  return (
+    <Suspense fallback={<h1>Loading...</h1>}>
+      <Page />
+    </Suspense>
   );
 }
 

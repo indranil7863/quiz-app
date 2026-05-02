@@ -6,6 +6,8 @@ import { Suspense } from "react";
 
 function ResultContent() {
   const params = useSearchParams();
+  const quizId = params.get("id") as string;
+  const title = params.get("title") as string;
   let score = params.get("score") ? parseInt(params.get("score")!) : 0;
   const totalQuestions = params.get("total")
     ? parseInt(params.get("total")!)
@@ -57,7 +59,7 @@ function ResultContent() {
         </section>
         <section className="flex justify-around items-center py-4 px-2 gap-4">
           <Link
-            href={"/"}
+            href={`/dashboard/quiz?id=${quizId}`}
             className=" flex-1 center-div flex-col py-2 rounded-lg bg-sky-400/50 hover:bg-sky-600 text-white"
           >
             <RotateCcw size={18} />

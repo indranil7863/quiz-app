@@ -20,19 +20,23 @@ const page = () => {
   async function HandleJoinQuiz() {
     // first verify the code
     try {
-      // const res = await fetch(`http://localhost:3000/${code}`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-type": "application/json",
-      //   },
-      // });
+      const res = await fetch(`http://localhost:4000/quiz/verify/${code}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
 
-      // if (!res.ok) {
-      //   throw new Error("Invalid code!");
-      // }
+      if (!res.ok) {
+        throw new Error("Invalid code!");
+      }
+
+      const data = await res.json();
+      console.log("data: ", data.quizId.id);
 
       // if code verification successful then redirect to /dashboard/quiz/id
-      router.push(`/dashboard/quiz?code=${code}`);
+      router.push(`/dashboard/quiz?id=${data.quizId.id}`);
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
