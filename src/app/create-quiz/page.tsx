@@ -6,7 +6,6 @@ import { Save } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
-
 type Question = {
   id: string;
   question: string;
@@ -33,7 +32,7 @@ const Page = () => {
   useEffect(() => {
     if (quizId) {
       (async () => {
-        const res = await fetch(`${URL}/${quizId}`, {
+        const res = await fetch(`${URL}/quiz/${quizId}`, {
           credentials: "include",
         });
         if (!res.ok) {
@@ -102,6 +101,7 @@ const Page = () => {
         }
       } else {
         // if quizId not exist then only create request
+        console.log("URL: ", URL);
         const res = await fetch(`${URL}/quiz`, {
           method: "POST",
           credentials: "include",
@@ -193,12 +193,12 @@ const Page = () => {
   );
 };
 
-const page = () =>{
+const page = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Page/>
+      <Page />
     </Suspense>
-  )
-}
+  );
+};
 
 export default page;
