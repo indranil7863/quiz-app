@@ -25,7 +25,7 @@ const schema = z.object({
 });
 
 export const SignIn = () => {
-  const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
   const router = useRouter();
   const {
     register,
@@ -37,7 +37,7 @@ export const SignIn = () => {
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
   const submitData: SubmitHandler<Inputs> = async (data) => {
     try {
-      const res = await fetch(`${URL}/auth/signin`, {
+      const res = await fetch(`${Backend_URL}/auth/signin`, {
         method: "POST",
         credentials: "include",
         headers: {

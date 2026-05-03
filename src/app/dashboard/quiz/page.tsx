@@ -14,7 +14,7 @@ type Question = {
 };
 
 function Page() {
-  const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
   const searchParams = useSearchParams();
   const quizId = searchParams.get("id") as string;
   // console.log("quizId: ", quizId);
@@ -48,7 +48,7 @@ function Page() {
 
   async function fetchData() {
     try {
-      const res = await fetch(`${URL}/quiz/${quizId}`, {
+      const res = await fetch(`${Backend_URL}/quiz/${quizId}`, {
         credentials: "include",
       });
 

@@ -28,12 +28,12 @@ type Quiz = {
 };
 
 const page = () => {
-  const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
   const [allQuiz, setAllQuiz] = useState<Quiz[] | null>(null);
 
   useEffect(() => {
     (async () => {
-      const res = await fetch("${URL}/quiz/", {
+      const res = await fetch(`${Backend_URL}/quiz/`, {
         credentials: "include",
         headers: {
           "content-type": "application/json",

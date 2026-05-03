@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import React, { use, useState } from "react";
 
 const page = () => {
-  const URL = process.env.BACKEND_URL;
+  const Backend_URL = process.env.BACKEND_URL;
   const [code, setCode] = useState<string>("");
   const [error, setError] = useState<string>("");
   const router = useRouter();
@@ -21,7 +21,7 @@ const page = () => {
   async function HandleJoinQuiz() {
     // first verify the code
     try {
-      const res = await fetch(`${URL}/quiz/verify/${code}`, {
+      const res = await fetch(`${Backend_URL}/quiz/verify/${code}`, {
         method: "POST",
         credentials: "include",
         headers: {
