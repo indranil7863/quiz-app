@@ -1,8 +1,8 @@
 "use client";
 import TimeCount from "@/components/TimeCount";
-import { Clock, PartyPopper, QuoteIcon } from "lucide-react";
+import { Clock, PartyPopper } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { Suspense, use, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 type Question = {
@@ -16,7 +16,7 @@ type Question = {
 function Page() {
   const searchParams = useSearchParams();
   const quizId = searchParams.get("id") as string;
-  console.log("quizId: ", quizId);
+  // console.log("quizId: ", quizId);
   const quizData = useRef([
     {
       id: 1,
@@ -42,7 +42,7 @@ function Page() {
   ]);
   const countRef = useRef(0);
   const [item, setItem] = useState<Question | null>(null);
-  console.log("item", item);
+  // console.log("item", item);
   const router = useRouter();
 
   async function fetchData() {
@@ -92,7 +92,7 @@ function Page() {
   useEffect(() => {
     async function init() {
       const data = await fetchData();
-      console.log(data.message.questions);
+      // console.log(data.message.questions);
       quizData.current = data.message.questions;
       const q = run();
       if (q) startTimer(q);
@@ -140,7 +140,7 @@ function Page() {
     }, 1500);
   }
 
-  console.log("Rendering....");
+  // console.log("Rendering....");
 
   return (
     <div className=" w-full min-h-screen flex flex-col gap-4">

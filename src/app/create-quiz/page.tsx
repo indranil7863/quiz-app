@@ -3,8 +3,8 @@ import Backbtn from "@/components/Backbtn";
 import Edit from "@/components/Edit";
 import SideBar from "@/components/SideBar";
 import { Save } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
 type Question = {
   id: string;
@@ -14,7 +14,10 @@ type Question = {
   duration: number;
 };
 
-const page = () => {
+const Page = () => {
+  const searchParams = useSearchParams();
+  const quizId = searchParams.get("id") as string;
+
   const router = useRouter();
   const [quiz, setQuiz] = useState<Question[]>([]);
   const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
@@ -24,6 +27,25 @@ const page = () => {
 
   // here our data is ready for new quiz we have to spread in one place then send to backend
   // if it is an existing quiz , then fetched data is allocated to states .
+
+  useEffect(() => {
+    if (quizId) {
+      (async () => {
+        const res = await fetch(`http://localhost:4000/quiz/${quizId}`, {
+          credentials: "include",
+        });
+        if (!res.ok) {
+          return;
+        }
+        const data = await res.json();
+        setTitle(data.message.title);
+        setDescription(data.message.description);
+        setQuiz(data.message.questions);
+      })();
+    }
+  }, []);
+
+  // console.log("quizdata:", quiz);
 
   async function saveQuizHandler() {
     // validation
@@ -60,19 +82,37 @@ const page = () => {
       quizCode,
       questions: quiz,
     };
-    console.log("quiz:", quizData);
+
     try {
-      const res = await fetch("http://localhost:4000/quiz", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(quizData),
-      });
-      if (!res.ok) {
-        throw new Error("Failed to create the quiz!");
+      if (quizId) {
+        // request for update
+        const res = await fetch(`http://localhost:4000/quiz/${quizId}`, {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(quizData),
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to update the quiz!");
+        }
+      } else {
+        // if quizId not exist then only create request
+        const res = await fetch(`http://localhost:4000/quiz`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(quizData),
+        });
+        if (!res.ok) {
+          throw new Error("Failed to create the quiz!");
+        }
       }
+
       router.replace("/dashboard");
     } catch (error) {
       console.log("error: ", error);
@@ -150,5 +190,13 @@ const page = () => {
     </div>
   );
 };
+
+const page = () =>{
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Page/>
+    </Suspense>
+  )
+}
 
 export default page;

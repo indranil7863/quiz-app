@@ -8,7 +8,8 @@ function TimeCount({
   isRunning: boolean;
 }) {
   const [time, setTime] = useState<number>(duration);
-  console.log(time);
+  // console.log(time);
+
   useEffect(() => {
     if (!isRunning) return;
     if (!duration) return;
@@ -22,8 +23,10 @@ function TimeCount({
         return prev - 1;
       });
     }, 1000);
+
     return () => clearInterval(interval);
   }, [duration, isRunning]);
+
   return (
     <div>
       <span

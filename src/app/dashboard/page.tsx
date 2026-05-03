@@ -29,6 +29,7 @@ type Quiz = {
 
 const page = () => {
   const [allQuiz, setAllQuiz] = useState<Quiz[] | null>(null);
+
   useEffect(() => {
     (async () => {
       const res = await fetch("http://localhost:4000/quiz/", {
@@ -45,7 +46,7 @@ const page = () => {
       setAllQuiz(data.message);
     })();
   }, []);
-  console.log(allQuiz);
+  // console.log(allQuiz);
 
   return (
     <div className=" flex flex-col gap-4">
@@ -92,7 +93,7 @@ const page = () => {
               <div className="flex justify-between items-center pt-4 gap-2">
                 <Link
                   className="border center-div gap-4 px-4 text-sm font-bold py-2 rounded-lg hover:text-gray-500"
-                  href={"/create-quiz"}
+                  href={`/create-quiz?id=${quiz.id}`}
                 >
                   <SquarePen size={18} />
                   <span>Edit</span>
