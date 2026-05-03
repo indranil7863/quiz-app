@@ -28,7 +28,7 @@ type Quiz = {
 };
 
 const page = () => {
-  const URL = process.env.BACKEND_URL;
+  const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
   const [allQuiz, setAllQuiz] = useState<Quiz[] | null>(null);
 
   useEffect(() => {

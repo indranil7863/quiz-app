@@ -44,7 +44,7 @@ const schema = z
   });
 
 export const Register = () => {
-  const URL = process.env.BACKEND_URL;
+  const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
   const router = useRouter();
   const {
     register,

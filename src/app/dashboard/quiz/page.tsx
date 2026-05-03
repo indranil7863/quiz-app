@@ -14,7 +14,7 @@ type Question = {
 };
 
 function Page() {
-  const URL = process.env.BACKEND_URL;
+  const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
   const searchParams = useSearchParams();
   const quizId = searchParams.get("id") as string;
   // console.log("quizId: ", quizId);

@@ -25,7 +25,7 @@ const schema = z.object({
 });
 
 export const SignIn = () => {
-  const URL = process.env.BACKEND_URL;
+  const URL = process.env.NEXT_PUBLIC_BACKEND_URL;
   const router = useRouter();
   const {
     register,
