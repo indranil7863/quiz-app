@@ -1,5 +1,5 @@
 "use client";
-import Backbtn from "@/components/Backbtn";
+
 import {
   ArrowLeft,
   CirclePlus,
@@ -28,11 +28,12 @@ type Quiz = {
 };
 
 const page = () => {
+  const URL = process.env.BACKEND_URL;
   const [allQuiz, setAllQuiz] = useState<Quiz[] | null>(null);
 
   useEffect(() => {
     (async () => {
-      const res = await fetch("http://localhost:4000/quiz/", {
+      const res = await fetch("${URL}/quiz/", {
         credentials: "include",
         headers: {
           "content-type": "application/json",

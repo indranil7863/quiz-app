@@ -25,6 +25,7 @@ const schema = z.object({
 });
 
 export const SignIn = () => {
+  const URL = process.env.BACKEND_URL;
   const router = useRouter();
   const {
     register,
@@ -36,7 +37,7 @@ export const SignIn = () => {
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
   const submitData: SubmitHandler<Inputs> = async (data) => {
     try {
-      const res = await fetch("http://localhost:4000/auth/signin", {
+      const res = await fetch(`${URL}/auth/signin`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -127,7 +128,7 @@ export const SignIn = () => {
           </span>
         </div>
         <Link
-          className="text-center border text-green-500 border-green-400 border-2 w-[90%] py-1 rounded-xl transition duration-300 hover:scale-105 hover:text-black mx-auto"
+          className="text-center text-green-500 border-green-400 border-2 w-[90%] py-1 rounded-xl transition duration-300 hover:scale-105 hover:text-black mx-auto"
           href="/register"
         >
           Create New Account

@@ -6,6 +6,7 @@ import { Save } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
+
 type Question = {
   id: string;
   question: string;
@@ -15,6 +16,7 @@ type Question = {
 };
 
 const Page = () => {
+  const URL = process.env.BACKEND_URL;
   const searchParams = useSearchParams();
   const quizId = searchParams.get("id") as string;
 
@@ -31,7 +33,7 @@ const Page = () => {
   useEffect(() => {
     if (quizId) {
       (async () => {
-        const res = await fetch(`http://localhost:4000/quiz/${quizId}`, {
+        const res = await fetch(`${URL}/${quizId}`, {
           credentials: "include",
         });
         if (!res.ok) {
@@ -86,7 +88,7 @@ const Page = () => {
     try {
       if (quizId) {
         // request for update
-        const res = await fetch(`http://localhost:4000/quiz/${quizId}`, {
+        const res = await fetch(`${URL}/quiz/${quizId}`, {
           method: "PATCH",
           credentials: "include",
           headers: {
@@ -100,7 +102,7 @@ const Page = () => {
         }
       } else {
         // if quizId not exist then only create request
-        const res = await fetch(`http://localhost:4000/quiz`, {
+        const res = await fetch(`${URL}/quiz`, {
           method: "POST",
           credentials: "include",
           headers: {

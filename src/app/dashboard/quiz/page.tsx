@@ -14,6 +14,7 @@ type Question = {
 };
 
 function Page() {
+  const URL = process.env.BACKEND_URL;
   const searchParams = useSearchParams();
   const quizId = searchParams.get("id") as string;
   // console.log("quizId: ", quizId);
@@ -47,7 +48,7 @@ function Page() {
 
   async function fetchData() {
     try {
-      const res = await fetch(`http://localhost:4000/quiz/${quizId}`, {
+      const res = await fetch(`${URL}/quiz/${quizId}`, {
         credentials: "include",
       });
 
@@ -163,10 +164,6 @@ function Page() {
                   />
                 )}
               </div>
-              {/* <div className="center-div flex-col gap-1">
-                <span>Score</span>
-                <span>0/0</span>
-              </div> */}
             </div>
           </div>
           <div className={`w-full bg-gray-300 rounded overflow-hidden`}>
@@ -218,7 +215,6 @@ function Page() {
           )}
         </div>
       </section>
-      <section></section>
     </div>
   );
 }

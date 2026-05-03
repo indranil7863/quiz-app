@@ -44,6 +44,7 @@ const schema = z
   });
 
 export const Register = () => {
+  const URL = process.env.BACKEND_URL;
   const router = useRouter();
   const {
     register,
@@ -55,7 +56,7 @@ export const Register = () => {
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
   const submitData: SubmitHandler<Inputs> = async(data) => {
         try {
-      const res = await fetch("http://localhost:4000/auth/register", {
+      const res = await fetch(`${URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
