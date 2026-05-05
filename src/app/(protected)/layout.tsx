@@ -14,14 +14,14 @@ export default async function ({ children }: { children: React.ReactNode }) {
     cache: "no-store",
   });
 
-//   if (res.ok) {
-//     redirect("/register");
-//   }
+  if (res.ok) {
+    redirect("/register");
+  }
 
-//   const data = await res.json();
-//   if (!data.authenticated) {
-//     redirect("/");
-//   }
+  const data = await res.json();
+  if (!data.authenticated) {
+    redirect("/");
+  }
 
   return <>{children}</>;
 }
