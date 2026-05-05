@@ -64,13 +64,17 @@ export const Register = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: data.name, email: data.email, password: data.password }),
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        }),
       });
       if (!response.ok) {
         const data = await response.json();
         throw new Error(data.message || "Signup failed");
       }
-      router.replace("/");
+      router.replace("/signin");
     } catch (error) {
       setError("root", { message: "Network connection failed" });
     }
@@ -99,7 +103,6 @@ export const Register = () => {
         onSubmit={handleSubmit(submitData)}
         className=" max-w-[400px] mx-auto flex flex-col justify-center bg-gray-500/20 gap-4 px-4 py-4 rounded-xl"
       >
-       
         <div className="flex just-center items-center">
           <ArrowLeft size={18} />
           <p className="flex-1 text-center text-2xl">Create Account</p>
@@ -207,7 +210,7 @@ export const Register = () => {
         </div>
         <Link
           className="text-center border text-sky-500 border-sky-400 border-2 w-full py-1 rounded-xl transition duration-300 hover:scale-105 hover:text-white mx-auto"
-          href={"/"}
+          href={"/signin"}
         >
           Sign In Instead
         </Link>

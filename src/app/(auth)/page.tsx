@@ -9,7 +9,6 @@ import {
   Zap,
 } from "lucide-react";
 
-import { SignIn } from "@/components/SignIn";
 
 export default function Home() {
   return (
@@ -117,9 +116,9 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className=" flex-1">
+      {/* <section className=" flex-1">
         <SignIn />
-      </section>
+      </section> */}
     </div>
   );
 }

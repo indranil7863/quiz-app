@@ -67,10 +67,10 @@ export const SignIn = () => {
   }, [reset, isSubmitSuccessful]);
 
   return (
-    <div className="flex flex-col justify-center gap-4 rounded-4xl px-2 pb-4">
+    <>
       <form
         onSubmit={handleSubmit(submitData)}
-        className="flex flex-col just-center gap-4 bg-white text-black max-w-110 rounded-2xl pb-4"
+        className="flex flex-col just-center gap-4 bg-white text-black w-full max-w-100  rounded-2xl pb-4"
       >
         {errors.root && <p style={{ color: "red" }}>{errors.root.message}</p>}
         <div>
@@ -134,11 +134,11 @@ export const SignIn = () => {
           Create New Account
         </Link>
       </form>
-      <section className=" max-w-110 items-center  py-2 flex flex-col rounded-xl text-sm bg-gray-700/20 shadow-2xl justify-center">
+      <section className="w-full max-w-100 items-center  py-2 flex flex-col rounded-xl text-sm bg-gray-700/20 shadow-2xl justify-center">
         <p>Demo Credentials:</p>
         <span>Email: demo@quizlet.com</span>
         <span>Password: demo123</span>
       </section>
-    </div>
+    </>
   );
 };
