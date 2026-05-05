@@ -8,21 +8,31 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="center-div lg:flex-row flex-col  gap-x-4 ">
       <section className="flex-1 px-4 ">
-        <div className="w-[80%] mx-auto flex flex-col justify-center gap-6 pb-8">
-          <div className="flex flex-row justify-start gap-x-4 py-4 px-2 ">
-            <p className=" h-12 w-12 center-div rounded-full bg-white">
-              <BookOpen color="black" />
-            </p>
-            <div className="flex flex-col justify-center gap-2">
-              <h2 className="text-3xl font-semibold">Quizlet</h2>
-              <p className="text-gray-400">Interactive Quiz Platform</p>
+        <div className="w-full md:w-[80%] mx-auto flex flex-col justify-center gap-6 pb-8">
+          <div className="flex flex-row justify-between items-center gap-x-4 py-4 px-2 ">
+            <div className=" flex gap-2 w-full max-w-[90%]">
+              <p className=" h-12 w-12 center-div rounded-full bg-white">
+                <BookOpen color="black" />
+              </p>
+              <div className="flex flex-col justify-center gap-2">
+                <h2 className="text-3xl font-semibold">Quizlet</h2>
+                <p className="text-gray-400 sm:flex hidden">
+                  Interactive Quiz Platform
+                </p>
+              </div>
             </div>
+            <Link
+              href={"/signin"}
+              className=" flex-1 px-12 py-2 rounded-lg bg-button-background font-medium text-button-foreground tracking-wider hover:bg-button-background/50 "
+            >
+              SignIn
+            </Link>
           </div>
           <div className="flex flex-col justify-center gap-2 px-6 py-8 rounded-4xl shadow-2xl bg-gray-500/20 ">
             <h1 className="text-2xl">Welcome to Quizlet!</h1>
