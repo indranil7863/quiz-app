@@ -22,20 +22,7 @@ export const authStore = create<authStoreType>((set)=>({
     signup: async (name, email, password)=>{
         set({isLoading: true, error: null});
         try {
-            const response = await fetch(`${Backend_URL}/auth/register`, {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    'Content-Type': "application/json"
-                },
-                body: JSON.stringify({name, email, password})
-            });
-            if(!response.ok){
-                const data = await response.json();
-                return;
-                throw new Error(data.message || "Signup failed");
             
-            }
             set({isAuthenticated: false, isLoading: false})
         } catch (error) {
             const err = error instanceof Error ? error.message : "Error on signup";
