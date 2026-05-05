@@ -74,7 +74,15 @@ const page = () => {
           </Link>
         </section>
       </div>
-      <section className=" w-full md:w-[90%] border mx-auto py-4 px-2 flex gap-4 items-center justify-center flex-wrap">
+      <section className=" w-full md:w-[90%] mx-auto py-4 px-2 flex gap-4 items-center justify-center flex-wrap">
+        {allQuiz === null ? (
+          <div className="text-gray-500 md:text-2xl">
+            {" "}
+            No, quiz has been created!
+          </div>
+        ) : (
+          ""
+        )}
         {allQuiz &&
           allQuiz.map((quiz, i) => (
             <div
