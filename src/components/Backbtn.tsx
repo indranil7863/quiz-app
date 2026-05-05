@@ -11,7 +11,7 @@ function Backbtn() {
         className="center-div gap-4 px-4 py-1 rounded-lg bg-button-background text-button-foreground hover:bg-button-background/50"
       >
         <ArrowLeft size={18} />
-        <span>Back</span>
+        <span className="md:flex hidden">Back</span>
       </button>
     </>
   );

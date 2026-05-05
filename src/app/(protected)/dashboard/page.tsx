@@ -52,14 +52,14 @@ const page = () => {
   return (
     <div className=" flex flex-col gap-4">
       <div className="bg-secondary-background">
-        <section className="sticky top-0 z-4 shadow-2xl flex w-[90%] mx-auto  justify-between items-center px-4 py-2 bg-secondary-background text-secondary-foreground">
+        <section className="sticky top-0 z-4 shadow-2xl flex md:w-[90%] mx-auto  justify-between items-center px-4 py-2 bg-secondary-background text-secondary-foreground">
           <div className="center-div gap-4 py-2">
             <Link
               href={"/landingpage"}
               className="center-div gap-4 px-4 py-1 rounded-lg bg-button-background text-button-foreground hover:bg-button-background/50"
             >
               <ArrowLeft size={18} />
-              <span>Back</span>
+              <span className="md:flex hidden">Back</span>
             </Link>
             <div className=" text-2xl px-2 py-2 font-medium">
               <span>My Quizzes</span>
@@ -74,12 +74,12 @@ const page = () => {
           </Link>
         </section>
       </div>
-      <section className="w-[90%] mx-auto py-4 px-2 flex gap-4 items-center justify-center flex-wrap">
+      <section className=" w-full md:w-[90%] border mx-auto py-4 px-2 flex gap-4 items-center justify-center flex-wrap">
         {allQuiz &&
           allQuiz.map((quiz, i) => (
             <div
               key={i}
-              className=" bg-card-background text-card-foreground max-w-[350px] flex flex-col gap-2 px-4 py-4 rounded-lg hover:scale-102 transition duration-150"
+              className=" bg-card-background text-card-foreground border w-full max-w-[350px] flex flex-col gap-2 px-4 py-4 rounded-lg hover:scale-102 transition duration-150"
             >
               <h2 className="text-xl font-serif tracking-wide font-medium">
                 {quiz.title}

@@ -129,8 +129,8 @@ const Page = () => {
   return (
     <div>
       <section className=" w-full sticky top-0  py-2 bg-secondary-background text-secondary-foreground z-4">
-        <div className=" w-[90%] mx-auto flex flex-wrap gap-6  justify-end sm:justify-between items-center px-2 py-2">
-          <div className="sm:center-div flex justify-between mx-auto sm:ml-0 gap-4">
+        <div className="w-full border sm:w-[90%] mx-auto flex  gap-6  justify-end sm:justify-between items-center px-2 py-2">
+          <div className="flex border sm:justify-between mx-auto sm:ml-0 gap-4">
             <Backbtn />
             <p className="text-xl sm:text-2xl">Create New Quiz</p>
           </div>
