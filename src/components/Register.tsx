@@ -16,6 +16,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { authStore } from "@/lib/authStore";
 
 type Inputs = {
   name: string;
@@ -45,6 +46,8 @@ const schema = z
 
 export const Register = () => {
   const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const signup = authStore((state) => state.signup);
+  const error = authStore((state) => state.error);
   const router = useRouter();
   const {
     register,
@@ -54,28 +57,10 @@ export const Register = () => {
     formState: { isSubmitSuccessful },
     formState: { errors },
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
-  const submitData: SubmitHandler<Inputs> = async(data) => {
-        try {
-      const res = await fetch(`${Backend_URL}/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          password: data.password
-        }),
-      });
-      const result = await res.json();
-      console.log(result);
-      if (!res.ok) {
-        setError("root", {
-          type: "server",
-          message: result.message || "Something went wrong",
-        });
-        return;
-      }
+  const submitData: SubmitHandler<Inputs> = async (data) => {
+    
+    try {
+      await signup(data.name, data.email, data.password);
       router.replace("/landingpage");
     } catch (error) {
       setError("root", { message: "Network connection failed" });
@@ -105,6 +90,7 @@ export const Register = () => {
         onSubmit={handleSubmit(submitData)}
         className=" max-w-[400px] mx-auto flex flex-col justify-center bg-gray-500/20 gap-4 px-4 py-4 rounded-xl"
       >
+        {error}
         <div className="flex just-center items-center">
           <ArrowLeft size={18} />
           <p className="flex-1 text-center text-2xl">Create Account</p>

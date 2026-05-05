@@ -119,7 +119,7 @@ function Page() {
     }
 
     setSelected(index);
-    setIsRunning(false); // ⛔ stop timer
+    setIsRunning(false); //  stop timer
 
     setShowResult(true);
 

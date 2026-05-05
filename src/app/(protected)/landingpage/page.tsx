@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import React, { use, useState } from "react";
 
 const page = () => {
-  const Backend_URL = process.env.BACKEND_URL;
+  const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
   const [code, setCode] = useState<string>("");
   const [error, setError] = useState<string>("");
   const router = useRouter();
@@ -48,6 +48,22 @@ const page = () => {
     }
   }
 
+  async function LogoutHandler() {
+    try {
+      const res = await fetch(`${Backend_URL}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to logout!");
+      }
+      router.replace("/");
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
+
   return (
     <div className=" min-h-screen w-full flex flex-col gap-4 ">
       <div className="flex justify-between items-center py-2 px-4 shadow-2xl sticky top-0 z-10 bg-secondary-background">
@@ -64,13 +80,13 @@ const page = () => {
           >
             Dashboard
           </Link>
-          <Link
+          <button
             className="center-div gap-4 hover:bg-gray-400 transition duration-150 text-white px-4 py-1 rounded-lg"
-            href={"/"}
+            onClick={LogoutHandler}
           >
             <LogOut />
             <span>Logout</span>
-          </Link>
+          </button>
         </div>
       </div>
       <section className=" flex flex-col  w-[80%] mx-auto gap-6 py-4">
