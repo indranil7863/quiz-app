@@ -66,14 +66,14 @@ const page = () => {
 
   return (
     <div className=" min-h-screen w-full flex flex-col gap-4 ">
-      <div className="flex justify-between items-center py-2 px-4 shadow-2xl sticky top-0 z-10 bg-secondary-background">
-        <div className="center-div gap-2">
+      <div className=" flex justify-between items-center py-4 px-4 shadow-2xl sticky top-0 z-10 bg-secondary-background">
+        <div className="  center-div gap-2">
           <span className="w-12 h-12 center-div bg-white  text-green-400 rounded-full">
             <BookOpen />
           </span>
           <span className="text-3xl">Quizlet</span>
         </div>
-        <div className="center-div gap-8">
+        <div className="center-div gap-4 md:gap-8">
           <Link
             href={"/dashboard"}
             className=" px-4 py-1 hover:bg-green-300 hover:text-black transition duration-150 rounded-lg"
@@ -89,18 +89,18 @@ const page = () => {
           </button>
         </div>
       </div>
-      <section className=" flex flex-col  w-[80%] mx-auto gap-6 py-4">
-        <div className="max-w-[50%] mx-auto">
-          <h2 className="text-center text-5xl font-semibold tracking-wide">
+      <section className="flex flex-col px-2  md:w-[80%] mx-auto gap-6 py-4">
+        <div className=" text-center">
+          <h2 className="text-center md:text-5xl text-3xl font-semibold tracking-wide">
             Make Learning Fun!
           </h2>
-          <p className="text-center text-xl font-light tracking-wide py-4">
+          <p className="text-center md:text-xl text-lg font-light tracking-wide py-4">
             Create engaging quizzes and challenge your friends. Join thousands
             of educators making learning interactive and enjoyable.
           </p>
         </div>
-        <div className="w-[50%] mx-auto center-div gap-4 flex-wrap">
-          <div className=" rounded-lg bg-card-background text-card-foreground flex-1 flex flex-col items-center py-6 px-4 gap-4 hover:scale-105 transition duration-150">
+        <div className=" mx-auto center-div gap-4 flex-wrap">
+          <div className=" max-w-[350px] min-h-[300px] rounded-lg bg-card-background text-card-foreground flex flex-col items-center justify-evenly py-6 px-4 gap-4 hover:scale-105 transition duration-150">
             <span className="w-12 h-12 center-div bg-white  text-green-400 rounded-full">
               <BadgePlus />
             </span>
@@ -115,7 +115,7 @@ const page = () => {
               Get Started
             </Link>
           </div>
-          <div className=" rounded-lg bg-card-background text-card-foreground flex-1 flex flex-col items-center py-6 px-4 gap-4 hover:scale-105 transition duration-150">
+          <div className=" rounded-lg bg-card-background text-card-foreground max-w-[350px] flex flex-col items-center py-6 px-4 gap-4 hover:scale-105 transition duration-150">
             <span className="w-12 h-12 center-div bg-white  text-green-400 rounded-full">
               <Users />
             </span>
