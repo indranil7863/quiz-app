@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/app/loading";
 import Backbtn from "@/components/Backbtn";
 import Edit from "@/components/Edit";
 import SideBar from "@/components/SideBar";
@@ -15,6 +16,7 @@ type Question = {
 };
 
 const Page = () => {
+
   const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
   const searchParams = useSearchParams();
   const quizId = searchParams.get("id") as string;
@@ -87,6 +89,7 @@ const Page = () => {
     try {
       if (quizId) {
         // request for update
+
         const res = await fetch(`${Backend_URL}/quiz/${quizId}`, {
           method: "PATCH",
           credentials: "include",
@@ -118,8 +121,10 @@ const Page = () => {
       router.replace("/dashboard");
     } catch (error) {
       console.log("error: ", error);
-    }
+    } 
   }
+
+ 
 
   if (err.length > 1) {
     alert(err);
@@ -195,7 +200,7 @@ const Page = () => {
 
 const page = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading/> }>
       <Page />
     </Suspense>
   );

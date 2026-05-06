@@ -4,6 +4,7 @@ import { Clock, PartyPopper } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Loading from "@/app/loading";
 
 type Question = {
   id: number;
@@ -141,7 +142,7 @@ function Page() {
     }, 1500);
   }
 
-  // console.log("Rendering....");
+
 
   return (
     <div className=" w-full min-h-screen flex flex-col gap-4">
@@ -221,7 +222,7 @@ function Page() {
 
 function page() {
   return (
-    <Suspense fallback={<h1>Loading...</h1>}>
+    <Suspense fallback={<Loading />}>
       <Page />
     </Suspense>
   );

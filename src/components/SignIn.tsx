@@ -1,11 +1,12 @@
 "use client";
 import { Lock, Mail, User } from "lucide-react";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/loading";
 
 type Inputs = {
   email: string;
@@ -25,6 +26,8 @@ const schema = z.object({
 });
 
 export const SignIn = () => {
+  const [isloading, setIsLoading] = useState<boolean>(false);
+
   const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
   const router = useRouter();
   const {
@@ -37,6 +40,7 @@ export const SignIn = () => {
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
   const submitData: SubmitHandler<Inputs> = async (data) => {
     try {
+      setIsLoading(true);
       const res = await fetch(`${Backend_URL}/auth/signin`, {
         method: "POST",
         credentials: "include",
@@ -57,6 +61,8 @@ export const SignIn = () => {
       router.replace("/landingpage");
     } catch (error) {
       setError("root", { message: "Network connection failed" });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -65,6 +71,14 @@ export const SignIn = () => {
       reset();
     }
   }, [reset, isSubmitSuccessful]);
+
+  if (isloading) {
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  }
 
   return (
     <>

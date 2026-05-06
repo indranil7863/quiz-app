@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/app/loading";
 import {
   ArrowLeft,
   CirclePlus,
@@ -28,26 +29,42 @@ type Quiz = {
 };
 
 const page = () => {
+  const [isloading, setIsLoading] = useState<boolean>(false);
   const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
   const [allQuiz, setAllQuiz] = useState<Quiz[] | null>(null);
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`${Backend_URL}/quiz/`, {
-        credentials: "include",
-        headers: {
-          "content-type": "application/json",
-        },
-      });
+      try {
+        setIsLoading(true);
+        const res = await fetch(`${Backend_URL}/quiz/`, {
+          credentials: "include",
+          headers: {
+            "content-type": "application/json",
+          },
+        });
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch data");
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+          return;
+        }
+        const data = await res.json();
+        setAllQuiz(data.message);
+      } catch (error) {
+        console.log("error: ", error);
+      } finally {
+        setIsLoading(false);
       }
-      const data = await res.json();
-      setAllQuiz(data.message);
     })();
   }, []);
   // console.log(allQuiz);
+  if (isloading) {
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  }
 
   return (
     <div className=" flex flex-col gap-4">
