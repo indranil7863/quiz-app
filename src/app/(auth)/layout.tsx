@@ -3,13 +3,10 @@ import { redirect } from "next/navigation";
 
 export default async function ({ children }: { children: React.ReactNode }) {
   const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const cookieStore = cookies();
-  const cookieHeader = (await cookieStore).toString();
 
   const res = await fetch(`${Backend_URL}/auth/check`, {
-    credentials: "include",
     headers: {
-      Cookie: cookieHeader,
+      Cookie: cookies().toString(),
     },
     cache: "no-store",
   });
@@ -18,10 +15,6 @@ export default async function ({ children }: { children: React.ReactNode }) {
     redirect("/landingpage");
   }
 
-  //   const data = await res.json();
-  //   if (!data.authenticated) {
-  //     redirect("/");
-  //   }
 
   return <>{children}</>;
 }
