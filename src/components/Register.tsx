@@ -10,13 +10,16 @@ import {
   User,
   UserPlus,
 } from "lucide-react";
+
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { authStore } from "@/lib/authStore";
+import {toast} from 'react-toastify'
+
 
 type Inputs = {
   name: string;
@@ -46,6 +49,7 @@ const schema = z
 
 export const Register = () => {
   const Backend_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const [isloading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const {
@@ -58,6 +62,7 @@ export const Register = () => {
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
   const submitData: SubmitHandler<Inputs> = async (data) => {
     try {
+      setIsLoading(true);
       const response = await fetch(`${Backend_URL}/auth/register`, {
         method: "POST",
         credentials: "include",
@@ -70,13 +75,19 @@ export const Register = () => {
           password: data.password,
         }),
       });
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.message || "Signup failed");
+      
+      const resdata = await response.json();
+      if(response.status === 200){
+        toast.success("Successful Registration!")
+         router.replace("/signin");
+      }else{
+        toast.error(resdata.message);
       }
-      router.replace("/signin");
+     
     } catch (error) {
-      setError("root", { message: "Network connection failed" });
+       toast.error("Network Error!")
+    }finally{
+      setIsLoading(false);
     }
   };
 
@@ -186,9 +197,16 @@ export const Register = () => {
             <span className="text-red-500">{errors.confirm?.message}</span>
           )}
         </div>
-        <button className="flex flex-row justify-center gap-2 w-full mx-auto py-1  rounded-xl text-white bg-green-600 transition duration-300 hover:scale-105 hover:bg-green-500">
-          <UserPlus size={18} />
-          <span>Create Account</span>
+        <button className="flex flex-row justify-center gap-2 w-full mx-auto py-2  rounded-xl text-white bg-green-600 transition duration-300 hover:scale-105 hover:bg-green-500">
+          {
+            isloading ? 
+            (<div className="border-l-0 border-2 border-white rounded-full animate-spin  h-[20px] py-2 w-[20px] "></div> )
+            :
+          (<div className="flex gap-2">
+            <UserPlus size={18} />
+            <span>Create Account</span>
+            </div>)
+          }
         </button>
         <div className="py-4">
           <p className="text-center text-sm">

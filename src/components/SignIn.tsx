@@ -6,7 +6,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import Loading from "@/app/loading";
+import {toast} from 'react-toastify'
 
 type Inputs = {
   email: string;
@@ -58,8 +58,14 @@ export const SignIn = () => {
         });
         return;
       }
-      router.replace("/landingpage");
+      if(res.status === 200){
+        toast.success("Successful Signup!")
+         router.replace("/landingpage");
+
+      }
+     
     } catch (error) {
+      toast.error("Network Error!")
       setError("root", { message: "Network connection failed" });
     } finally {
       setIsLoading(false);
@@ -72,21 +78,18 @@ export const SignIn = () => {
     }
   }, [reset, isSubmitSuccessful]);
 
-  if (isloading) {
-    return (
-      <>
-        <Loading />
-      </>
-    );
-  }
+ 
 
   return (
     <>
       <form
         onSubmit={handleSubmit(submitData)}
         className="flex flex-col just-center gap-4 bg-white text-black w-full max-w-100  rounded-2xl pb-4"
-      >
-        {errors.root && <p style={{ color: "red" }}>{errors.root.message}</p>}
+      > 
+      <div className="text-center">
+      {errors.root && <p style={{ color: "red" }}>{errors.root.message}</p>}
+      </div>
+        
         <div>
           <p className="text-center text-2xl py-2">Sign In</p>
           <p className="text-center py-1 text-gray-500">
@@ -124,8 +127,13 @@ export const SignIn = () => {
           )}
         </div>
         <button className="flex flex-row justify-center gap-2 w-[90%] mx-auto py-1  rounded-xl text-white bg-green-600 transition duration-300 hover:scale-105 hover:bg-green-500">
-          <User size={20} className="pt-1" />
+          {
+            isloading ? (<div className="border-l-0 border-2 border-white rounded-full animate-spin  h-5 py-2 w-5"></div> ): 
+            (<div className="flex gap-2">
+            <User size={20} className="pt-1" />
           <span>Sign In</span>
+          </div>)
+          }
         </button>
         <div className=" text-center">
           <Link
