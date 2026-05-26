@@ -4,7 +4,7 @@ import { Clock, PartyPopper } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import Loading from "@/app/loading";
+import Loading from "../../loading";
 
 type Question = {
   id: number;

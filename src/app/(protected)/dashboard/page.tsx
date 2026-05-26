@@ -1,6 +1,6 @@
 "use client";
 
-import Loading from "@/app/loading";
+import Loading from "../loading";
 import {
   ArrowLeft,
   CirclePlus,

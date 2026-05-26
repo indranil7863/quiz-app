@@ -1,5 +1,5 @@
 "use client";
-import Loading from "@/app/loading";
+import Loading from "../loading";
 import Backbtn from "@/components/Backbtn";
 import Edit from "@/components/Edit";
 import SideBar from "@/components/SideBar";
@@ -27,6 +27,7 @@ const Page = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [err, setErr] = useState<string>("");
+  const [isloading, setIsLoading] = useState(false);
 
   // here our data is ready for new quiz we have to spread in one place then send to backend
   // if it is an existing quiz , then fetched data is allocated to states .
@@ -87,6 +88,7 @@ const Page = () => {
     };
 
     try {
+      setIsLoading(true);
       if (quizId) {
         // request for update
 
@@ -121,10 +123,10 @@ const Page = () => {
       router.replace("/dashboard");
     } catch (error) {
       console.log("error: ", error);
-    } 
+    } finally{
+      setIsLoading(false);
+    }
   }
-
- 
 
   if (err.length > 1) {
     alert(err);
@@ -143,9 +145,13 @@ const Page = () => {
             <button
               onClick={saveQuizHandler}
               className="center-div gap-4 px-4 py-1 rounded-lg bg-gray-500/30 hover:bg-gray-700/30"
-            >
-              <Save size={18} />
-              <span>Save Quiz</span>
+            > 
+             {
+              isloading ? (<div className="border-l-0 border-2 border-white rounded-full animate-spin  h-5 py-2 w-5"></div> ): (<div className="flex gap-2 items-center">
+                 <Save size={18} />
+                 <span>Save Quiz</span>
+              </div>)
+             }
             </button>
           </div>
         </div>
