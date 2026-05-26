@@ -77,7 +77,7 @@ export const Register = () => {
       });
       
       const resdata = await response.json();
-      if(response.status === 200){
+      if(response.status === 201){
         toast.success("Successful Registration!")
          router.replace("/signin");
       }else{
